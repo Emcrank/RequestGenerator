@@ -1,0 +1,105 @@
+﻿<views:EditWindow x:TypeArguments="models:FsUtilFileRequest"
+                  x:Class="RequestGenerator.WPFApp.Views.FsUtilFileRequestEditWindow"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:markupExtensions="clr-namespace:RequestGenerator.WPFApp.MarkupExtensions"
+                  xmlns:views="clr-namespace:RequestGenerator.WPFApp.Views"
+                  xmlns:models="clr-namespace:RequestGenerator.Logic.Requests;assembly=RequestGenerator.Logic"
+                  mc:Ignorable="d"
+                  Title="FakeFileRequestEditWindow"
+                  ResizeMode="NoResize"
+                  WindowStartupLocation="CenterOwner"
+                  SizeToContent="WidthAndHeight"
+                  WindowStyle="None"
+                  Style="{StaticResource {x:Type Window}}"
+                  d:DataContext="{d:DesignInstance models:FsUtilFileRequest}">
+
+    <Border Style="{StaticResource Panel}" Width="500">
+        <StackPanel Style="{StaticResource StackPanel}" Orientation="Vertical">
+            <TextBlock Text="{Binding Name}" Style="{StaticResource Headline}" />
+            <TextBlock Text="{Binding Description}" Style="{StaticResource StrapLine}" />
+
+            <Label Content="{markupExtensions:NameOf {Binding MaxSizeMb}}" />
+            <TextBox TextChanged="NumericTextBox_OnTextChanged"
+                     LostFocus="NumericTextBox_LostFocus"
+                     Text="{Binding MaxSizeMb}" />
+            <Slider AutoToolTipPlacement="BottomRight"
+                    Value="{Binding MaxSizeMb}"
+                    Minimum="{Binding MinSizeMb}"
+                    Maximum="10000" />
+
+            <Label Content="{markupExtensions:NameOf {Binding MinSizeMb}}" />
+            <TextBox TextChanged="NumericTextBox_OnTextChanged"
+                     LostFocus="NumericTextBox_LostFocus"
+                     Text="{Binding MinSizeMb}" />
+            <Slider AutoToolTipPlacement="BottomRight"
+                    Value="{Binding MinSizeMb}"
+                    Minimum="1"
+                    Maximum="{Binding MaxSizeMb}" />
+
+            <Label Content="{markupExtensions:NameOf {Binding InputFilePath}}" />
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0"
+                         Name="InputFilePathTextBox"
+                         Text="{Binding InputFilePath}"
+                         Tag="Comma-Separated Values|*.csv" />
+                <Button Grid.Column="1"
+                        Tag="InputFilePathTextBox"
+                        Content="Browse"
+                        Click="FilePathBrowseButtonToTextBox_OnClick" />
+            </Grid>
+
+            <Label Content="{markupExtensions:NameOf {Binding Count}}" />
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Column="0"
+                         TextChanged="NumericTextBox_OnTextChanged"
+                         LostFocus="NumericTextBox_LostFocus"
+                         Text="{Binding Count}"
+                         IsEnabled="{Binding ElementName=UseInputFileCountToggle,Path=IsChecked,Converter={StaticResource BoolInverterConverter}}" />
+
+                <TextBlock Grid.Column="1"
+                           Text="Or"
+                           Style="{StaticResource SubHeadline}" />
+
+                <ToggleButton Grid.Column="2"
+                              Name="UseInputFileCountToggle"
+                              Content="Use Input File"
+                              IsChecked="{Binding UseInputFileAsCount}" />
+            </Grid>
+
+            <Label Content="{markupExtensions:NameOf {Binding FileNameTemplate}}" />
+            <Label Content="Leave blank for random. Variables can be used syntax #{VarName}"
+                   Style="{StaticResource HintLabel}" />
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" Text="{Binding FileNameTemplate}" />
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="8*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="8*" />
+                </Grid.ColumnDefinitions>
+                <Button Name="CancelButton" Grid.Column="0" Content="Cancel" Click="CancelButton_OnClicked" />
+                <Button Grid.Column="2" Content="OK" Click="OKButton_OnClicked" />
+            </Grid>
+
+        </StackPanel>
+    </Border>
+</views:EditWindow>

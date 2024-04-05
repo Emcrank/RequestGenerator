@@ -1,0 +1,74 @@
+﻿<Window x:Class="RequestGenerator.WPFApp.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:userControls="clr-namespace:RequestGenerator.WPFApp.UserControls"
+        xmlns:viewModels="clr-namespace:RequestGenerator.WPFApp.ViewModels.Pages"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Height="600"
+        Width="1000"
+        Style="{StaticResource {x:Type Window}}"
+        d:DataContext="{d:DesignInstance viewModels:MainViewModel}">
+
+    <Grid Margin="15,15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="50*" />
+        </Grid.RowDefinitions>
+
+        <userControls:RequestCollectionViewControl Grid.Row="0" ItemsSource="{Binding Requests}"
+                                                   AddCommand="{Binding AddRequestCommand}"
+                                                   EditCommand="{Binding EditRequestCommand}"
+                                                   DeleteCommand="{Binding DeleteRequestCommand}" />
+
+        <Border Grid.Row="2" Style="{StaticResource Panel}">
+            <Grid Background="{StaticResource Gray950Brush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="70*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="20*" />
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0"
+                         ToolTip="Requests per minute (* for max)"
+                         Text="{Binding RequestsPerMinuteInput}"
+                         TextAlignment="Center"
+                         TextChanged="RPMTextBox_OnTextChanged" />
+                <TextBox Grid.Column="2"
+                         Text="{Binding OutputDirectory}"
+                         ToolTip="Enter the output directory... e.g C:\\Temp\\Output" />
+
+                <Button Grid.Column="4"
+                        Content="Generate"
+                        Command="{Binding GenerateCommand}"/>
+                <Button Grid.Column="4"
+                        Content="Cancel"
+                        Command="{Binding CancelGenerateCommand}">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+        </Border>
+
+        <ListView Grid.Row="4"
+                  SelectionMode="Extended"
+                  Background="{StaticResource Gray950Brush}"
+                  Foreground="{StaticResource PrimaryDarkBrush}"
+                  ItemsSource="{Binding LogMessages, Mode=OneWay}"
+                  FontFamily="Consolas" />
+
+    </Grid>
+</Window>

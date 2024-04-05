@@ -1,0 +1,94 @@
+﻿<UserControl x:Class="RequestGenerator.WPFApp.UserControls.RequestCardControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:converters="clr-namespace:RequestGenerator.WPFApp.Converters"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:Name="This">
+    <UserControl.Resources>
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource OffBlackBrush}" />
+            <Setter Property="MinWidth" Value="220" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="BorderBrush" Value="{StaticResource PrimaryDarkBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="8" />
+        </Style>
+
+        <Style x:Key="CardDetailHeader" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="{StaticResource WhiteBrush}" />
+        </Style>
+
+        <Style x:Key="CardDetailItem" TargetType="Label">
+            <Setter Property="FontSize" Value="9" />
+            <Setter Property="Foreground" Value="{StaticResource WhiteBrush}" />
+        </Style>
+
+        <Style x:Key="CardDetailItemName" TargetType="Label" BasedOn="{StaticResource CardDetailItem}">
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
+        </Style>
+
+        <Style x:Key="CardDetailItemValue" TargetType="Label" BasedOn="{StaticResource CardDetailItem}">
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+
+        <converters:RequestCardMaxFieldLengthConverter x:Key="RequestCardMaxFieldLengthConverter"/>
+    </UserControl.Resources>
+
+    <Border Style="{StaticResource Card}" DataContext="{x:Reference This}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Style="{StaticResource CardDetailHeader}" Grid.Row="0" Grid.ColumnSpan="2"
+                       Text="{Binding Title}" />
+
+            <Label Style="{StaticResource CardDetailItemName}" Grid.Row="1" Grid.Column="0"
+                   Content="{Binding Row1Name}" />
+            <Label Style="{StaticResource CardDetailItemValue}" Grid.Row="1" Grid.Column="1"
+                   Content="{Binding Row1Value, Converter={StaticResource RequestCardMaxFieldLengthConverter}}" />
+
+            <Label Style="{StaticResource CardDetailItemName}" Grid.Row="2" Grid.Column="0"
+                   Content="{Binding Row2Name}" />
+            <Label Style="{StaticResource CardDetailItemValue}" Grid.Row="2" Grid.Column="1"
+                   Content="{Binding Row2Value, Converter={StaticResource RequestCardMaxFieldLengthConverter}}" />
+
+            <Label Style="{StaticResource CardDetailItemName}" Grid.Row="3" Grid.Column="0"
+                   Content="{Binding Row3Name}" />
+            <Label Style="{StaticResource CardDetailItemValue}" Grid.Row="3" Grid.Column="1"
+                   Content="{Binding Row3Value, Converter={StaticResource RequestCardMaxFieldLengthConverter}}" />
+
+            <Label Style="{StaticResource CardDetailItemName}" Grid.Row="4" Grid.Column="0"
+                   Content="{Binding Row4Name}" />
+            <Label Style="{StaticResource CardDetailItemValue}" Grid.Row="4" Grid.Column="1"
+                   Content="{Binding Row4Value, Converter={StaticResource RequestCardMaxFieldLengthConverter}}" />
+
+            <Label Style="{StaticResource CardDetailItemName}" Grid.Row="5" Grid.Column="0"
+                   Content="{Binding Row5Name}" />
+            <Label Style="{StaticResource CardDetailItemValue}" Grid.Row="5" Grid.Column="1"
+                   Content="{Binding Row5Value, Converter={StaticResource RequestCardMaxFieldLengthConverter}}" />
+
+            <Label Style="{StaticResource CardDetailItemName}" Grid.Row="6" Grid.Column="0"
+                   Content="{Binding Row6Name}" />
+            <Label Style="{StaticResource CardDetailItemValue}" Grid.Row="6" Grid.Column="1"
+                   Content="{Binding Row6Value, Converter={StaticResource RequestCardMaxFieldLengthConverter}}" />
+        </Grid>
+    </Border>
+</UserControl>

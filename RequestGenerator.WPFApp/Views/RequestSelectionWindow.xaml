@@ -1,0 +1,29 @@
+﻿<Window x:Class="RequestGenerator.WPFApp.Views.RequestSelectionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="RequestSelectionWindow" Height="450" Width="800"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        SizeToContent="WidthAndHeight"
+        WindowStyle="None"
+        Style="{StaticResource {x:Type Window}}">
+    <Border Style="{StaticResource Panel}">
+        <StackPanel Orientation="Vertical" MinWidth="300">
+            <TextBlock Text="Add Request" Style="{StaticResource Headline}"/>
+            <Label Content="Select the request type to add:" />
+            <ComboBox Loaded="WindowSelector_OnLoaded" SelectionChanged="WindowSelector_OnSelectionChanged">
+                <!--<ComboBox.Resources>
+                    <Style TargetType="Text">
+                        <Setter Property="Padding" Value="0"></Setter>
+                        <Setter Property="Margin" Value="0"></Setter>
+                    </Style>
+                </ComboBox.Resources>-->
+            </ComboBox>
+            <Button Content="Cancel" Click="CancelButton_OnClicked" Margin="0,10,0,0"/>
+        </StackPanel>
+    </Border>
+    
+</Window>

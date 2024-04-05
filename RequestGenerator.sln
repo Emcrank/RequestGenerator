@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D4A9EFF9-9F57-46D3-B2D4-4DFAEA0B3963}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestGenerator.Logic", "RequestGenerator.Logic\RequestGenerator.Logic.csproj", "{F44E2EB7-9768-43DB-A205-AFAE4E3FD238}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestGenerator.WPFApp", "RequestGenerator.WPFApp\RequestGenerator.WPFApp.csproj", "{C610DC7D-0691-47D6-B80A-C0295013AFB3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F44E2EB7-9768-43DB-A205-AFAE4E3FD238}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F44E2EB7-9768-43DB-A205-AFAE4E3FD238}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F44E2EB7-9768-43DB-A205-AFAE4E3FD238}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F44E2EB7-9768-43DB-A205-AFAE4E3FD238}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C610DC7D-0691-47D6-B80A-C0295013AFB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C610DC7D-0691-47D6-B80A-C0295013AFB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C610DC7D-0691-47D6-B80A-C0295013AFB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C610DC7D-0691-47D6-B80A-C0295013AFB3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E6C1D6C6-CBA1-4DA6-AC3E-940B5341905C}
+	EndGlobalSection
+EndGlobal

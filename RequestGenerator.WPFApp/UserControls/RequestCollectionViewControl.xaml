@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="RequestGenerator.WPFApp.UserControls.RequestCollectionViewControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:userControls="clr-namespace:RequestGenerator.WPFApp.UserControls"
+             xmlns:markupExtensions="clr-namespace:RequestGenerator.WPFApp.MarkupExtensions"
+             xmlns:models="clr-namespace:RequestGenerator.Logic.Requests;assembly=RequestGenerator.Logic"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:Name="This">
+
+    <Border Style="{StaticResource Panel}" DataContext="{x:Reference This}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="+ Request" Command="{Binding AddCommand}" />
+            </Grid>
+
+            <ListView Grid.Row="1"
+                      Name="ListView"
+                      ItemsSource="{Binding ItemsSource}"
+                      SelectionMode="Single"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      MouseDoubleClick="ListView_OnMouseDoubleClick">
+                <ListView.Resources>
+                    <DataTemplate DataType="{x:Type models:TemplatedFileRequest}">
+                        <userControls:RequestCardControl Title="{Binding Name}"
+                                                         Row1Name="{markupExtensions:NameOf {Binding TemplateFilePath}}"
+                                                         Row1Value="{Binding TemplateFilePath}"
+                                                         Row2Name="{markupExtensions:NameOf {Binding InputFilePath}}"
+                                                         Row2Value="{Binding InputFilePath}"
+                                                         Row3Name="{markupExtensions:NameOf {Binding Count}}"
+                                                         Row3Value="{Binding Count}"
+                                                         Row4Name="{markupExtensions:NameOf {Binding UseInputFileAsCount}}"
+                                                         Row4Value="{Binding UseInputFileAsCount}"
+                                                         Row5Name="{markupExtensions:NameOf {Binding FileNameTemplate}}"
+                                                         Row5Value="{Binding FileNameTemplate}" />
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type models:FsUtilFileRequest}">
+                        <userControls:RequestCardControl Title="{Binding Name}"
+                                                         Row1Name="{markupExtensions:NameOf {Binding InputFilePath}}"
+                                                         Row1Value="{Binding InputFilePath}"
+                                                         Row2Name="{markupExtensions:NameOf {Binding Count}}"
+                                                         Row2Value="{Binding Count}"
+                                                         Row3Name="{markupExtensions:NameOf {Binding UseInputFileAsCount}}"
+                                                         Row3Value="{Binding UseInputFileAsCount}"
+                                                         Row4Name="{markupExtensions:NameOf {Binding MinSizeMb}}"
+                                                         Row4Value="{Binding MinSizeMb}"
+                                                         Row5Name="{markupExtensions:NameOf {Binding MaxSizeMb}}"
+                                                         Row5Value="{Binding MaxSizeMb}"
+                                                         Row6Name="{markupExtensions:NameOf {Binding FileNameTemplate}}"
+                                                         Row6Value="{Binding FileNameTemplate}" />
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type models:RandomFromSetFileRequest}">
+                        <userControls:RequestCardControl Title="{Binding Name}"
+                                                         Row1Name="{markupExtensions:NameOf {Binding InputFilePath}}"
+                                                         Row1Value="{Binding InputFilePath}"
+                                                         Row2Name="{markupExtensions:NameOf {Binding Count}}"
+                                                         Row2Value="{Binding Count}"
+                                                         Row3Name="{markupExtensions:NameOf {Binding UseInputFileAsCount}}"
+                                                         Row3Value="{Binding UseInputFileAsCount}"
+                                                         Row4Name="Files In Group"
+                                                         Row4Value="{Binding Files.Count}"
+                                                         Row5Name="{markupExtensions:NameOf {Binding FileNameTemplate}}"
+                                                         Row5Value="{Binding FileNameTemplate}" />
+                    </DataTemplate>
+                </ListView.Resources>
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+
+                <ListView.Template>
+                    <ControlTemplate>
+                        <ScrollViewer>
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </ListView.Template>
+
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Add" Click="ListViewMenuItemAdd_OnClick"/>
+                        <MenuItem Header="Edit" Click="ListViewMenuItemEdit_OnClick"/>
+                        <MenuItem Header="Delete" Click="ListViewMenuItemDelete_OnClick"/>
+                    </ContextMenu>
+                </ListView.ContextMenu>
+            </ListView>
+
+        </Grid>
+    </Border>
+</UserControl>
