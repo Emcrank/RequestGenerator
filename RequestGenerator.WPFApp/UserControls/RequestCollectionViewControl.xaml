@@ -19,7 +19,7 @@
 
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" Content="+ Request" Command="{Binding AddCommand}" />
             </Grid>
@@ -33,46 +33,64 @@
                 <ListView.Resources>
                     <DataTemplate DataType="{x:Type models:TemplatedFileRequest}">
                         <userControls:RequestCardControl Title="{Binding Name}"
-                                                         Row1Name="{markupExtensions:NameOf {Binding TemplateFilePath}}"
-                                                         Row1Value="{Binding TemplateFilePath}"
-                                                         Row2Name="{markupExtensions:NameOf {Binding InputFilePath}}"
-                                                         Row2Value="{Binding InputFilePath}"
-                                                         Row3Name="{markupExtensions:NameOf {Binding Count}}"
-                                                         Row3Value="{Binding Count}"
-                                                         Row4Name="{markupExtensions:NameOf {Binding UseInputFileAsCount}}"
-                                                         Row4Value="{Binding UseInputFileAsCount}"
+                                                         Row1Name="{markupExtensions:NameOf {Binding Destination}}"
+                                                         Row1Value="{Binding Destination}"
+                                                         Row2Name="{markupExtensions:NameOf {Binding TemplateFilePath}}"
+                                                         Row2Value="{Binding TemplateFilePath}"
+                                                         Row3Name="{markupExtensions:NameOf {Binding InputFilePath}}"
+                                                         Row3Value="{Binding InputFilePath}"
+                                                         Row4Name="{markupExtensions:NameOf {Binding Count}}"
                                                          Row5Name="{markupExtensions:NameOf {Binding FileNameTemplate}}"
-                                                         Row5Value="{Binding FileNameTemplate}" />
+                                                         Row5Value="{Binding FileNameTemplate}">
+                            <userControls:RequestCardControl.Row4Value>
+                                <MultiBinding StringFormat="{}{0} (Uses Input File: {1})">
+                                    <Binding Path="Count" />
+                                    <Binding Path="UseInputFileAsCount" />
+                                </MultiBinding>
+                            </userControls:RequestCardControl.Row4Value>
+                        </userControls:RequestCardControl>
                     </DataTemplate>
 
                     <DataTemplate DataType="{x:Type models:FsUtilFileRequest}">
                         <userControls:RequestCardControl Title="{Binding Name}"
-                                                         Row1Name="{markupExtensions:NameOf {Binding InputFilePath}}"
-                                                         Row1Value="{Binding InputFilePath}"
-                                                         Row2Name="{markupExtensions:NameOf {Binding Count}}"
-                                                         Row2Value="{Binding Count}"
-                                                         Row3Name="{markupExtensions:NameOf {Binding UseInputFileAsCount}}"
-                                                         Row3Value="{Binding UseInputFileAsCount}"
+                                                         Row1Name="{markupExtensions:NameOf {Binding Destination}}"
+                                                         Row1Value="{Binding Destination}"
+                                                         Row2Name="{markupExtensions:NameOf {Binding InputFilePath}}"
+                                                         Row2Value="{Binding InputFilePath}"
+                                                         Row3Name="{markupExtensions:NameOf {Binding Count}}"
                                                          Row4Name="{markupExtensions:NameOf {Binding MinSizeMb}}"
                                                          Row4Value="{Binding MinSizeMb}"
                                                          Row5Name="{markupExtensions:NameOf {Binding MaxSizeMb}}"
                                                          Row5Value="{Binding MaxSizeMb}"
                                                          Row6Name="{markupExtensions:NameOf {Binding FileNameTemplate}}"
-                                                         Row6Value="{Binding FileNameTemplate}" />
+                                                         Row6Value="{Binding FileNameTemplate}">
+                            <userControls:RequestCardControl.Row3Value>
+                                <MultiBinding StringFormat="{}{0} (Uses Input File: {1})">
+                                    <Binding Path="Count" />
+                                    <Binding Path="UseInputFileAsCount" />
+                                </MultiBinding>
+                            </userControls:RequestCardControl.Row3Value>
+                        </userControls:RequestCardControl>
                     </DataTemplate>
 
                     <DataTemplate DataType="{x:Type models:RandomFromSetFileRequest}">
                         <userControls:RequestCardControl Title="{Binding Name}"
-                                                         Row1Name="{markupExtensions:NameOf {Binding InputFilePath}}"
-                                                         Row1Value="{Binding InputFilePath}"
-                                                         Row2Name="{markupExtensions:NameOf {Binding Count}}"
-                                                         Row2Value="{Binding Count}"
-                                                         Row3Name="{markupExtensions:NameOf {Binding UseInputFileAsCount}}"
-                                                         Row3Value="{Binding UseInputFileAsCount}"
+                                                         Row1Name="{markupExtensions:NameOf {Binding Destination}}"
+                                                         Row1Value="{Binding Destination}"
+                                                         Row2Name="{markupExtensions:NameOf {Binding InputFilePath}}"
+                                                         Row2Value="{Binding InputFilePath}"
+                                                         Row3Name="{markupExtensions:NameOf {Binding Count}}"
                                                          Row4Name="Files In Group"
                                                          Row4Value="{Binding Files.Count}"
                                                          Row5Name="{markupExtensions:NameOf {Binding FileNameTemplate}}"
-                                                         Row5Value="{Binding FileNameTemplate}" />
+                                                         Row5Value="{Binding FileNameTemplate}">
+                            <userControls:RequestCardControl.Row3Value>
+                                <MultiBinding StringFormat="{}{0} (Uses Input File: {1})">
+                                    <Binding Path="Count" />
+                                    <Binding Path="UseInputFileAsCount" />
+                                </MultiBinding>
+                            </userControls:RequestCardControl.Row3Value>
+                        </userControls:RequestCardControl>
                     </DataTemplate>
                 </ListView.Resources>
                 <ListView.ItemsPanel>
@@ -91,9 +109,9 @@
 
                 <ListView.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Add" Click="ListViewMenuItemAdd_OnClick"/>
-                        <MenuItem Header="Edit" Click="ListViewMenuItemEdit_OnClick"/>
-                        <MenuItem Header="Delete" Click="ListViewMenuItemDelete_OnClick"/>
+                        <MenuItem Header="Add" Click="ListViewMenuItemAdd_OnClick" />
+                        <MenuItem Header="Edit" Click="ListViewMenuItemEdit_OnClick" />
+                        <MenuItem Header="Delete" Click="ListViewMenuItemDelete_OnClick" />
                     </ContextMenu>
                 </ListView.ContextMenu>
             </ListView>

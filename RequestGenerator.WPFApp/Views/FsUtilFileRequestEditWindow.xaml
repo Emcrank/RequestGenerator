@@ -21,7 +21,18 @@
             <TextBlock Text="{Binding Name}" Style="{StaticResource Headline}" />
             <TextBlock Text="{Binding Description}" Style="{StaticResource StrapLine}" />
 
+            <Label Content="{markupExtensions:NameOf {Binding Destination}}" />
+            <Label Content="Where should these requests be generated?" Style="{StaticResource HintLabel}" />
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" Text="{Binding Destination}" />
+            </Grid>
+
             <Label Content="{markupExtensions:NameOf {Binding MaxSizeMb}}" />
+            <Label Content="The maximum size in MB they can be?" Style="{StaticResource HintLabel}" />
             <TextBox TextChanged="NumericTextBox_OnTextChanged"
                      LostFocus="NumericTextBox_LostFocus"
                      Text="{Binding MaxSizeMb}" />
@@ -31,6 +42,7 @@
                     Maximum="10000" />
 
             <Label Content="{markupExtensions:NameOf {Binding MinSizeMb}}" />
+            <Label Content="The minimum size in MB they can be?" Style="{StaticResource HintLabel}" />
             <TextBox TextChanged="NumericTextBox_OnTextChanged"
                      LostFocus="NumericTextBox_LostFocus"
                      Text="{Binding MinSizeMb}" />
@@ -40,6 +52,7 @@
                     Maximum="{Binding MaxSizeMb}" />
 
             <Label Content="{markupExtensions:NameOf {Binding InputFilePath}}" />
+            <Label Content="Read data for any variables from the following file..." Style="{StaticResource HintLabel}" />
             <Grid Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -56,6 +69,8 @@
             </Grid>
 
             <Label Content="{markupExtensions:NameOf {Binding Count}}" />
+            <Label Content="How many requests do you want? or just match the input file line count?"
+                   Style="{StaticResource HintLabel}" />
             <Grid Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -80,8 +95,9 @@
             </Grid>
 
             <Label Content="{markupExtensions:NameOf {Binding FileNameTemplate}}" />
-            <Label Content="Leave blank for random. Variables can be used syntax #{VarName}"
-                   Style="{StaticResource HintLabel}" />
+            <Label
+                Content="What should the filename's be? Leave blank for random. Variables can be used syntax #{VarName}"
+                Style="{StaticResource HintLabel}" />
             <Grid Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />

@@ -88,11 +88,11 @@
             </Trigger>
             <Trigger Property="IsChecked" Value="True">
                 <Setter Property="Content" Value="ON" />
-                <Setter Property="Background" Value="{StaticResource PrimaryDarkBrush}" />
+                <Setter Property="Background" Value="{StaticResource MagentaBrush}" />
             </Trigger>
             <Trigger Property="IsChecked" Value="False">
                 <Setter Property="Content" Value="OFF" />
-                <Setter Property="Background" Value="{StaticResource Gray100Brush}" />
+                <Setter Property="Background" Value="{StaticResource PrimaryDarkBrush}" />
             </Trigger>
         </Style.Triggers>
         <Style.Resources>

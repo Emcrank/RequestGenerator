@@ -1,8 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.ObjectModel;
 using System.Windows;
-using Microsoft.Win32;
 using System.Windows.Controls;
+using Microsoft.Win32;
 using RequestGenerator.Logic.Requests;
 
 namespace RequestGenerator.WPFApp.Views;
@@ -15,20 +14,6 @@ public partial class RandomFromSetFileRequestEditWindow : EditWindow<RandomFromS
     public RandomFromSetFileRequestEditWindow()
     {
         InitializeComponent();
-    }
-
-    protected override bool PreOkValidation()
-    {
-        try
-        {
-            DataContext.PreGeneration();
-            return true;
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message);
-            return false;
-        }
     }
 
     protected void MultiFilePathBrowseButtonToListBox_OnClicked(object sender, RoutedEventArgs e)
@@ -49,7 +34,7 @@ public partial class RandomFromSetFileRequestEditWindow : EditWindow<RandomFromS
         if (fileOpen.ShowDialog(this) != true)
             return;
 
-        var list = ((IList) listBox.ItemsSource);
+        var list = (IList)listBox.ItemsSource;
 
         foreach (string fileName in fileOpen.FileNames)
         {
@@ -58,4 +43,17 @@ public partial class RandomFromSetFileRequestEditWindow : EditWindow<RandomFromS
         }
     }
 
+    protected override bool PreOkValidation()
+    {
+        try
+        {
+            DataContext.PreGeneration();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+            return false;
+        }
+    }
 }

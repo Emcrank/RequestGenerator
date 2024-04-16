@@ -53,7 +53,6 @@ public partial class RequestCollectionViewControl : UserControl
         set => SetValue(EditCommandProperty, value);
     }
 
-
     public ICommand DeleteCommand
     {
         get => (ICommand)GetValue(DeleteCommandProperty);
@@ -65,14 +64,14 @@ public partial class RequestCollectionViewControl : UserControl
         AddCommand.Execute(null);
     }
 
-    private void EditSelectedItem()
-    {
-        EditCommand.Execute(ListView.SelectedItem);
-    }
-
     private void DeleteSelectedItem()
     {
         DeleteCommand.Execute(ListView.SelectedItem);
+    }
+
+    private void EditSelectedItem()
+    {
+        EditCommand.Execute(ListView.SelectedItem);
     }
 
     private void ListView_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -80,14 +79,14 @@ public partial class RequestCollectionViewControl : UserControl
         EditSelectedItem();
     }
 
-    private void ListViewMenuItemDelete_OnClick(object sender, RoutedEventArgs e)
-    {
-        DeleteSelectedItem();
-    }
-
     private void ListViewMenuItemAdd_OnClick(object sender, RoutedEventArgs e)
     {
         AddItem();
+    }
+
+    private void ListViewMenuItemDelete_OnClick(object sender, RoutedEventArgs e)
+    {
+        DeleteSelectedItem();
     }
 
     private void ListViewMenuItemEdit_OnClick(object sender, RoutedEventArgs e)

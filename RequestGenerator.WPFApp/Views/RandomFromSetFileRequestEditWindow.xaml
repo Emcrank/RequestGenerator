@@ -21,7 +21,18 @@
             <TextBlock Text="{Binding Name}" Style="{StaticResource Headline}" />
             <TextBlock Text="{Binding Description}" Style="{StaticResource StrapLine}" />
 
+            <Label Content="{markupExtensions:NameOf {Binding Destination}}" />
+            <Label Content="Where should these requests be generated?" Style="{StaticResource HintLabel}" />
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" Text="{Binding Destination}" />
+            </Grid>
+
             <Label Content="{markupExtensions:NameOf {Binding Files}}" />
+            <Label Content="Select the set of files to pick from..." Style="{StaticResource HintLabel}" />
             <Grid Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -30,31 +41,33 @@
                 <ListBox Grid.Column="0"
                          Name="FilesListBox"
                          ItemsSource="{Binding Files}"
-                         Tag="All files|*.*"/>
-                <Button Grid.Column="1" 
-                        Tag="FilesListBox" 
+                         Tag="All files|*.*" />
+                <Button Grid.Column="1"
+                        Tag="FilesListBox"
                         Content="Browse"
                         Click="MultiFilePathBrowseButtonToListBox_OnClicked" />
             </Grid>
 
-
             <Label Content="{markupExtensions:NameOf {Binding InputFilePath}}" />
+            <Label Content="Read data for any variables from the following file..." Style="{StaticResource HintLabel}" />
             <Grid Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0" 
-                         Name="InputFilePathTextBox" 
+                <TextBox Grid.Column="0"
+                         Name="InputFilePathTextBox"
                          Text="{Binding InputFilePath}"
-                         Tag="Comma-Separated Values|*.csv"/>
-                <Button Grid.Column="1" 
-                        Tag="InputFilePathTextBox" 
+                         Tag="Comma-Separated Values|*.csv" />
+                <Button Grid.Column="1"
+                        Tag="InputFilePathTextBox"
                         Content="Browse"
                         Click="FilePathBrowseButtonToTextBox_OnClick" />
             </Grid>
 
             <Label Content="{markupExtensions:NameOf {Binding Count}}" />
+            <Label Content="How many requests do you want? or just match the input file line count?"
+                   Style="{StaticResource HintLabel}" />
             <Grid Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -62,14 +75,14 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Column="0" 
+                <TextBox Grid.Column="0"
                          TextChanged="NumericTextBox_OnTextChanged"
                          LostFocus="NumericTextBox_LostFocus"
                          Text="{Binding Count}"
                          IsEnabled="{Binding ElementName=UseInputFileCountToggle,Path=IsChecked,Converter={StaticResource BoolInverterConverter}}" />
 
-                <TextBlock Grid.Column="1" 
-                           Text="Or" 
+                <TextBlock Grid.Column="1"
+                           Text="Or"
                            Style="{StaticResource SubHeadline}" />
 
                 <ToggleButton Grid.Column="2"
@@ -79,7 +92,9 @@
             </Grid>
 
             <Label Content="{markupExtensions:NameOf {Binding FileNameTemplate}}" />
-            <Label Content="Leave blank for random. Variables can be used syntax #{VarName}" Style="{StaticResource HintLabel}" />
+            <Label
+                Content="What should the filename's be? Leave blank for random. Variables can be used syntax #{VarName}"
+                Style="{StaticResource HintLabel}" />
             <Grid Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />

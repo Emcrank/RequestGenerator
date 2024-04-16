@@ -10,6 +10,7 @@ public abstract class Request : ObservableObject
     private int count;
     private string? inputFilePath;
     private bool useInputFileAsCount;
+    private string? destination;
 
     public abstract string Name { get; }
 
@@ -17,7 +18,7 @@ public abstract class Request : ObservableObject
 
     public int Count
     {
-        get => count;
+        get => UseInputFileAsCount && InputData != null ? InputData.DataCount : count;
         set => SetField(ref count, value);
     }
 
@@ -35,7 +36,13 @@ public abstract class Request : ObservableObject
 
     protected IInputData? InputData { get; private set; }
 
-    public abstract string Generate(string destination, int index);
+    public string? Destination
+    {
+        get => destination;
+        set => SetField(ref destination, value);
+    }
+
+    public abstract string Generate(int index);
 
     public void LoadInputDataIfRequired()
     {
@@ -51,6 +58,9 @@ public abstract class Request : ObservableObject
 
         if (UseInputFileAsCount)
             Count = InputData?.DataCount ?? throw new InvalidOperationException("Input data not loaded.");
+
+        if (string.IsNullOrWhiteSpace(Destination))
+            throw new InvalidOperationException($"Requests of type '{Name}' must all have a valid destination set.");
     }
 
     protected Dictionary<string, string> GetRequestSubstitutions(int index)
@@ -76,7 +86,7 @@ public abstract class Request : ObservableObject
         return substitutions;
     }
 
-    protected string MatchReplacer(Match match, Dictionary<string, string> substitutions)
+    protected static string MatchReplacer(Match match, Dictionary<string, string> substitutions)
     {
         var variable = new ReplacementVariable(match);
 

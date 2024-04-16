@@ -18,7 +18,8 @@ public static class RequestEditWindowFactory
                 var mainWindowType = typeof(MainWindow);
                 //Get page type
                 string pageName = $"{mainWindowType.Namespace}.{v.Name}EditWindow";
-                var pageType = Assembly.GetAssembly(mainWindowType)?.GetType(pageName) ?? throw new InvalidOperationException($"Unable to find page type '{pageName}'");
+                var pageType = Assembly.GetAssembly(mainWindowType)?.GetType(pageName) ??
+                               throw new InvalidOperationException($"Unable to find page type '{pageName}'");
 
                 //Create new expression
                 var constructor = pageType.GetConstructor(Type.EmptyTypes) ??

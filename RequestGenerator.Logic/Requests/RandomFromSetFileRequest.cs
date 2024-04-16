@@ -9,11 +9,14 @@ public class RandomFromSetFileRequest : FileRequest
 
     public ObservableCollection<string> Files { get; } = new ObservableCollection<string>();
 
-    public override string Generate(string destination, int index)
+    public override string Generate(int index)
     {
+        if (string.IsNullOrWhiteSpace(Destination))
+            throw new InvalidOperationException("Destination was not set.");
+
         var substitutions = GetRequestSubstitutions(index);
         string outputFileName = GetOutputFileName(substitutions);
-        string outputFilePath = Path.Combine(destination, outputFileName);
+        string outputFilePath = Path.Combine(Destination, outputFileName);
 
         int randomIndex = Random.Shared.Next(0, Files.Count - 1);
 

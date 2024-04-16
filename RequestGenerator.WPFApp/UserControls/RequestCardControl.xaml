@@ -38,7 +38,7 @@
             <Setter Property="FontWeight" Value="Bold" />
         </Style>
 
-        <converters:RequestCardMaxFieldLengthConverter x:Key="RequestCardMaxFieldLengthConverter"/>
+        <converters:RequestCardMaxFieldLengthConverter x:Key="RequestCardMaxFieldLengthConverter" />
     </UserControl.Resources>
 
     <Border Style="{StaticResource Card}" DataContext="{x:Reference This}">

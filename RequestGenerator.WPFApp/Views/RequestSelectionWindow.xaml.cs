@@ -16,6 +16,22 @@ public partial class RequestSelectionWindow : Window
 
     public Window? ChosenWindow { get; private set; }
 
+    private void CancelButton_OnClicked(object sender, RoutedEventArgs e)
+    {
+        DialogResult = false;
+        Close();
+    }
+
+    private void PopulateItems(ComboBox control)
+    {
+        control.ItemsSource = RequestEditWindowFactory.WindowNames;
+    }
+
+    private void WindowSelector_OnLoaded(object sender, RoutedEventArgs e)
+    {
+        PopulateItems((ComboBox)sender);
+    }
+
     private void WindowSelector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         var comboBox = (ComboBox)sender;
@@ -26,22 +42,6 @@ public partial class RequestSelectionWindow : Window
         ChosenWindow = RequestEditWindowFactory.CreateWindow((string)comboBox.SelectedItem);
 
         DialogResult = true;
-        Close();
-    }
-
-    private void WindowSelector_OnLoaded(object sender, RoutedEventArgs e)
-    {
-        PopulateItems((ComboBox)sender);
-    }
-
-    private void PopulateItems(ComboBox control)
-    {
-        control.ItemsSource = RequestEditWindowFactory.WindowNames;
-    }
-
-    private void CancelButton_OnClicked(object sender, RoutedEventArgs e)
-    {
-        DialogResult = false;
         Close();
     }
 }

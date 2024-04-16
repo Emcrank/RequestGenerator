@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Security.Cryptography;
 
 namespace RequestGenerator.Logic.Requests;
 
@@ -23,11 +24,14 @@ public class FsUtilFileRequest : FileRequest
         set => SetField(ref maxSizeMb, value);
     }
 
-    public override string Generate(string destination, int index)
+    public override string Generate(int index)
     {
+        if (string.IsNullOrWhiteSpace(Destination))
+            throw new InvalidOperationException("Destination was not set.");
+
         var substitutions = GetRequestSubstitutions(index);
         string outputFileName = GetOutputFileName(substitutions);
-        string outputFilePath = Path.Combine(destination, outputFileName);
+        string outputFilePath = Path.Combine(Destination, outputFileName);
 
         long minSizeBytes = minSizeMb * 1024 * 1024;
         long maxSizeBytes = maxSizeMb * 1024 * 1024;

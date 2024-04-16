@@ -18,14 +18,17 @@ public class TemplatedFileRequest : FileRequest
         set => SetField(ref templateFilePath, value);
     }
 
-    public override string Generate(string destination, int index)
+    public override string Generate(int index)
     {
+        if (string.IsNullOrWhiteSpace(Destination))
+            throw new InvalidOperationException("Destination was not set.");
+
         var substitutions = GetRequestSubstitutions(index);
 
         string outputFileName = GetOutputFileName(substitutions);
         string content = GetContent(substitutions);
 
-        string outputFilePath = Path.Combine(destination, outputFileName);
+        string outputFilePath = Path.Combine(Destination, outputFileName);
 
         File.WriteAllText(outputFilePath, content);
 

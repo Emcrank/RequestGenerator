@@ -6,16 +6,18 @@ namespace RequestGenerator.WPFApp.MarkupExtensions;
 
 public class NameOfExtension : MarkupExtension
 {
-    private readonly PropertyPath _propertyPath;
+    private readonly PropertyPath propertyPath;
 
     public NameOfExtension(Binding binding)
     {
-        _propertyPath = binding.Path;
+        ArgumentNullException.ThrowIfNull(binding);
+
+        propertyPath = binding.Path;
     }
 
     public override object ProvideValue(IServiceProvider serviceProvider)
     {
-        int indexOfLastVariableName = _propertyPath.Path.LastIndexOf('.');
-        return _propertyPath.Path.Substring(indexOfLastVariableName + 1);
+        int indexOfLastVariableName = propertyPath.Path.LastIndexOf('.');
+        return propertyPath.Path.Substring(indexOfLastVariableName + 1);
     }
 }

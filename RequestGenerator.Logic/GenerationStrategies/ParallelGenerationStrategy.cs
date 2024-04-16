@@ -22,6 +22,8 @@ internal class ParallelGenerationStrategy : IGenerationStrategy
                     int requestId = requestIndex + 1;
                     int currentRequestNumber = 0;
 
+                    logCallback($"RequestId {requestId}| Destination: {request.Destination}");
+
                     for (int i = 0; i < request.Count; i++)
                     {
                         if (cancellationToken.IsCancellationRequested)
@@ -32,7 +34,7 @@ internal class ParallelGenerationStrategy : IGenerationStrategy
 
                         currentRequestNumber = i + 1;
 
-                        string outputFileName = request.Generate(options.Destination, i);
+                        string outputFileName = request.Generate(i);
                         logCallback($"RequestId {requestId}| {currentRequestNumber,6}/{request.Count,-6} | Generated {outputFileName}");
 
                         await Task.Delay(options.Delay, cancellationToken);

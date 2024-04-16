@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using RequestGenerator.Logic;
@@ -9,6 +8,25 @@ using RequestGenerator.WPFApp.Services;
 using RequestGenerator.WPFApp.Views;
 
 namespace RequestGenerator.WPFApp.ViewModels.Pages;
+
+public class ObservableLogMessageCollection : ObservableCollection<string>
+{
+    /// <summary>Inserts an item into the collection at the specified index.</summary>
+    /// <param name="index">The zero-based index at which <paramref name="item" /> should be inserted.</param>
+    /// <param name="item">The object to insert.</param>
+    protected override void InsertItem(int index, string item)
+    {
+        base.InsertItem(index, $"{DateTime.Now:dd-MM-yyy HH:mm:ss.fff} | {item}");
+    }
+
+    /// <summary>Replaces the element at the specified index.</summary>
+    /// <param name="index">The zero-based index of the element to replace.</param>
+    /// <param name="item">The new value for the element at the specified index.</param>
+    protected override void SetItem(int index, string item)
+    {
+        base.SetItem(index, $"{DateTime.Now:dd-MM-yyy HH:mm:ss.fff} | {item}");
+    }
+}
 
 public class MainViewModel : ObservableObject
 {
@@ -44,7 +62,7 @@ public class MainViewModel : ObservableObject
         set => SetField(ref isGenerating, value);
     }
 
-    public ObservableCollection<string> LogMessages { get; } = new()
+    public ObservableLogMessageCollection LogMessages { get; } = new()
     {
         "Request Generator",
         "Step 1 - Configure the types of requests you wish to generate.",
@@ -69,11 +87,6 @@ public class MainViewModel : ObservableObject
 
     public ObservableCollection<Request> Requests { get; } = new();
 
-    private void LogMessage(string message)
-    {
-        Application.Current.Dispatcher.Invoke(() => LogMessages.Add(message));
-    }
-
     private void AddRequest()
     {
         var selectionWindow = new RequestSelectionWindow { Owner = mainWindow };
@@ -89,6 +102,21 @@ public class MainViewModel : ObservableObject
             Requests.Add((Request)editWindow.DataContext);
     }
 
+    private void CancelGenerate()
+    {
+        cancellationTokenSource?.Cancel();
+        cancellationTokenSource?.Dispose();
+        cancellationTokenSource = null;
+    }
+
+    private void DeleteRequest(object? selectedItem)
+    {
+        if (selectedItem == null)
+            return;
+
+        Requests.Remove((Request)selectedItem);
+    }
+
     private void EditRequest(object? selectedItem)
     {
         if (selectedItem == null)
@@ -98,13 +126,6 @@ public class MainViewModel : ObservableObject
         editWindow.Owner = mainWindow;
         editWindow.DataContext = selectedItem;
         editWindow.ShowDialog();
-    }
-
-    private void CancelGenerate()
-    {
-        cancellationTokenSource?.Cancel();
-        cancellationTokenSource?.Dispose();
-        cancellationTokenSource = null;
     }
 
     private async void Generate()
@@ -141,37 +162,14 @@ public class MainViewModel : ObservableObject
         cancellationTokenSource = null;
     }
 
-    private void DeleteRequest(object? selectedItem)
+    private void LogMessage(string message)
     {
-        if (selectedItem == null)
-            return;
-
-        Requests.Remove((Request)selectedItem);
+        Application.Current.Dispatcher.Invoke(() => LogMessages.Add(message));
     }
 
     private void PreGenerationValidation()
     {
         if (string.IsNullOrWhiteSpace(RequestsPerMinuteInput))
             throw new InvalidOperationException("Invalid requests per minute. Must be a number or *");
-
-        if (string.IsNullOrWhiteSpace(OutputDirectory))
-            throw new InvalidOperationException("Invalid output directory.");
-
-        if (Directory.Exists(OutputDirectory))
-        {
-            LogMessages.Add("Output directory already exists.");
-        }
-        else
-        {
-            LogMessages.Add($"Output directory does not exist, creating {OutputDirectory}");
-            try
-            {
-                Directory.CreateDirectory(OutputDirectory);
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException($"Cannot create output directory - {ex.Message}");
-            }
-        }
     }
 }

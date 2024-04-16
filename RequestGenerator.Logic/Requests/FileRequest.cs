@@ -12,6 +12,20 @@ public abstract class FileRequest : Request
         set => SetField(ref fileNameTemplate, value);
     }
 
+    public override void PreGeneration()
+    {
+        base.PreGeneration();
+
+        try
+        {
+            Directory.CreateDirectory(Destination!);
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException($"Cannot create output directory - {ex.Message}");
+        }
+    }
+
     protected string GetOutputFileName(Dictionary<string, string> substitutions)
     {
         if (string.IsNullOrWhiteSpace(fileNameTemplate))

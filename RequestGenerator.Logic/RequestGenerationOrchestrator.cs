@@ -10,7 +10,7 @@ public class RequestGenerationOrchestrator
         ArgumentNullException.ThrowIfNull(requests);
         ArgumentNullException.ThrowIfNull(options);
 
-        return GenerateRequestsInternalAsync(requests, options.Destination, options.RequestsPerMinute, cancellationToken);
+        return GenerateRequestsInternalAsync(requests, options.RequestsPerMinute, cancellationToken);
     }
 
     public event EventHandler<string>? LogMessageProduced;
@@ -20,7 +20,7 @@ public class RequestGenerationOrchestrator
         LogMessageProduced?.Invoke(this, e);
     }
 
-    private Task GenerateRequestsInternalAsync(IList<Request> requests, string destination, int? requestsPerMinute, CancellationToken cancellationToken = default)
+    private Task GenerateRequestsInternalAsync(IList<Request> requests, int? requestsPerMinute, CancellationToken cancellationToken = default)
     {
         int totalRequestCount = requests.Sum(r => r.Count);
         if (totalRequestCount == 0)
@@ -28,7 +28,6 @@ public class RequestGenerationOrchestrator
 
         var options = new GenerationStrategyOptions
         {
-            Destination = destination,
             Delay = GetDelay(requestsPerMinute)
         };
 
@@ -37,7 +36,6 @@ public class RequestGenerationOrchestrator
         RaiseLogMessageProduced("----------------------------------------");
         RaiseLogMessageProduced($"{"Total Requests:",-17} {totalRequestCount}");
         RaiseLogMessageProduced($"{"Delay:",-17} {options.Delay:g}");
-        RaiseLogMessageProduced($"{"Destination:",-17} {destination}");
         RaiseLogMessageProduced("----------------------------------------");
 
         var strategy = new ParallelGenerationStrategy(RaiseLogMessageProduced);
