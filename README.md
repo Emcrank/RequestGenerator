@@ -16,11 +16,9 @@ This app allows the generation of requests including the use of a template file 
 
 # Templated File Request
 A template file is a file that is used as a base for the content of the generated files. It may contain variables inside in the format of `#{variable}`
-- It must be placed in the startup directory of the executable.
-- It must be named `Template.reqgentemplate`
-Currently the app only supports csv format. There are some requirements:
+There are some requirements:
 - The first line must contain the names of the variables as headers
-- It must be placed in the startup directory of the executable.
+- Currently the app only supports csv format. 
 
 #### Example Input File:
 ```
